@@ -78,13 +78,18 @@ class bt_mission:
         bt_mission.rate.sleep()
         sleep(2)
         msg = Twist()
+        msg.angular.z = 0.785
+        bt_mission.cmd_pub.publish(msg)
+        bt_mission.rate.sleep()
+        sleep(2)
+        msg = Twist()
         msg.linear.x = 0.4 
         msg.linear.z = 0.05
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
         sleep(2)
         msg = Twist()
-        msg.angular.z = 1
+        msg.angular.z = 0.785
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
         sleep(2)
@@ -100,13 +105,13 @@ class bt_mission:
     def PassAndLand(self):
         print("action: PassAndLand")
         msg = Twist()
-        msg.linear.x = 0.24
+        msg.linear.x = 0.3
         #msg.linear.z = 0.2
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
         sleep(2)
         msg = Twist()
-        msg.linear.x = 0.26 
+        msg.linear.x = 0.4 
         #msg.linear.z = 0.2
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
