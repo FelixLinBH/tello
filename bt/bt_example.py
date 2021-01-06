@@ -8,8 +8,6 @@ from std_msgs.msg import Empty, UInt8
 from behave import *
 from time import sleep
 
-
-random.seed()
 rospy.init_node('bt_mission', anonymous=True)
 sleep(2)
 print("takeoff")
