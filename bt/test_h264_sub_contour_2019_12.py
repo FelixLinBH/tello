@@ -52,7 +52,7 @@ class StandaloneVideoStream(object):
 stream = StandaloneVideoStream()
 
 global tag
-tag = 1
+tag = 0
 def callback(msg):
   #rospy.loginfo('frame: %d bytes' % len(msg.data))
   #if len(msg.data) > 1000:  
