@@ -76,8 +76,20 @@ class bt_mission:
         bt_mission.rate.sleep()
         sleep(2)
         msg = Twist()
-        msg.angular.x = 0.7
-        msg.angular.z = 0.06
+        msg.angular.x = 0.3
+        msg.angular.z = 0.03
+        bt_mission.cmd_pub.publish(msg)
+        bt_mission.rate.sleep()
+        sleep(2)
+        msg = Twist()
+        msg.linear.x = 0.6
+        #msg.linear.y = -0.1
+        bt_mission.cmd_pub.publish(msg)
+        bt_mission.rate.sleep()
+        sleep(2)
+        msg = Twist()
+        msg.angular.x = 0.3
+        msg.angular.z = 0.03
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
         sleep(2)
