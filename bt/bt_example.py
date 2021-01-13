@@ -133,7 +133,7 @@ class bt_mission:
     def Forward(self):
       print("action: Forward")
       msg = Twist()
-      msg.linear.x = 0.4
+      msg.linear.x = 0.35
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
