@@ -76,7 +76,7 @@ class bt_mission:
         bt_mission.rate.sleep()
         sleep(2)
         msg = Twist()
-        msg.angular.x = 0.26
+        msg.angular.x = 0.3
         msg.angular.z = 0.05
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
@@ -133,7 +133,7 @@ class bt_mission:
     def Forward(self):
       print("action: Forward")
       msg = Twist()
-      msg.linear.x = 0.35
+      msg.linear.x = 0.4
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
