@@ -70,13 +70,13 @@ class bt_mission:
     def PassAndSwitch(self):
         print("action: PassAndSwitch")
         msg = Twist()
-        msg.linear.x = 0.4
+        msg.linear.x = 0.5
         #msg.linear.y = -0.1
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
         sleep(2)
         msg = Twist()
-        msg.angular.x = 0.3
+        msg.angular.x = 0.6
         msg.angular.z = 0.05
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
