@@ -6,6 +6,7 @@ from geometry_msgs.msg import Twist
 def main():
   t1 = simple_turtle.Turtle("turtle1")
   t2 = simple_turtle.Turtle("turtle2")
+  t1.crtl.ser_spawn(6, 4, -30, "turtle2")
 
   t1.state.show()
   t1.crtl.ser_reset()
