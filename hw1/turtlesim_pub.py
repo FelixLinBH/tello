@@ -52,7 +52,7 @@ def turtle_pub():
 if __name__ == '__main__':
   rospy.init_node('turtlesim_pub', anonymous = True)
   try:
-    turtle_callSer()
+    # turtle_callSer()
     turtle_pub()
   except rospy.ROSInterruptException:
     pass
