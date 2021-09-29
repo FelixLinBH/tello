@@ -6,17 +6,19 @@ from geometry_msgs.msg import Twist
 def main():
   t1 = simple_turtle.Turtle("turtle1")
   t2 = simple_turtle.Turtle("turtle2")
-  
+  t1.crtl.ser_reset()
+  t2.crtl.ser_reset()
+
   t1.state.show()
   t2.state.show()
 
   msg = Twist()
-  msg.linear.x = 10.0
+  msg.linear.x = 2.0
   msg.angular.z = 2.4
   t1.crtl.move(msg, 1.0)
 
   msg = Twist()
-  msg.linear.x = 10.0
+  msg.linear.x = 2.0
   msg.angular.z = -2.4
   t2.crtl.move(msg, 1.0)
   
