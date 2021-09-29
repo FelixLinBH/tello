@@ -23,7 +23,7 @@ def turtle_pub():
   angle = 120
   while not rospy.is_shutdown():
     msg = Twist()
-    msg.linear.x = 100
+    msg.linear.x = 3
     rospy.loginfo(msg)
     pub.publish(msg)
     rate.sleep()
@@ -35,7 +35,7 @@ def turtle_pub():
     rate.sleep()
 
     msg = Twist()
-    msg.linear.x = 100
+    msg.linear.x = 3
     rospy.loginfo(msg)
     pub.publish(msg)
     rate.sleep()
