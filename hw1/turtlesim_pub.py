@@ -24,16 +24,15 @@ def turtle_pub():
     for side in range(6):
       msg = Twist()
       msg.linear.x = 10
-      msg.angular.z = 60
       rospy.loginfo(msg)
       pub.publish(msg)
       rate.sleep()
 
-      # msg = Twist()
-      # msg.angular.z = 60
-      # rospy.loginfo(msg)
-      # pub.publish(msg)
-      # rate.sleep()
+      msg = Twist()
+      msg.angular.z = 60
+      rospy.loginfo(msg)
+      pub.publish(msg)
+      rate.sleep()
 
     # msg = Twist()
     # msg.linear.x = 10
