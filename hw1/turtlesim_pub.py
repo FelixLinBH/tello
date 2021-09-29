@@ -43,6 +43,12 @@ def turtle_pub():
     rate.sleep()
 
     # msg = Twist()
+    # msg.angular.z = 60
+    # rospy.loginfo(msg)
+    # pub.publish(msg)
+    # rate.sleep()
+
+    # msg = Twist()
     # msg.linear.x = 10
     # msg.angular.z = 72 - angle
     # rospy.loginfo(msg)
@@ -52,7 +58,7 @@ def turtle_pub():
 if __name__ == '__main__':
   rospy.init_node('turtlesim_pub', anonymous = True)
   try:
-    # turtle_callSer()
+    turtle_callSer()
     turtle_pub()
   except rospy.ROSInterruptException:
     pass
