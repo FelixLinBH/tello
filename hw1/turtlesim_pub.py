@@ -20,31 +20,31 @@ from geometry_msgs.msg import Twist
 def turtle_pub():
   rate = rospy.Rate(10)
   pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size = 10)
-  angle = 120
   while not rospy.is_shutdown():
-    msg = Twist()
-    msg.linear.x = 10
-    rospy.loginfo(msg)
-    pub.publish(msg)
-    rate.sleep()
+    for side in range(6):
+      msg = Twist()
+      msg.linear.x = 10
+      rospy.loginfo(msg)
+      pub.publish(msg)
+      rate.sleep()
 
-    msg = Twist()
-    msg.angular.z = 120
-    rospy.loginfo(msg)
-    pub.publish(msg)
-    rate.sleep()
+      msg = Twist()
+      msg.angular.z = 60
+      rospy.loginfo(msg)
+      pub.publish(msg)
+      rate.sleep()
 
-    msg = Twist()
-    msg.linear.x = 10
-    rospy.loginfo(msg)
-    pub.publish(msg)
-    rate.sleep()
+    # msg = Twist()
+    # msg.linear.x = 10
+    # rospy.loginfo(msg)
+    # pub.publish(msg)
+    # rate.sleep()
 
-    msg = Twist()
-    msg.angular.z = 120
-    rospy.loginfo(msg)
-    pub.publish(msg)
-    rate.sleep()
+    # msg = Twist()
+    # msg.angular.z = 60
+    # rospy.loginfo(msg)
+    # pub.publish(msg)
+    # rate.sleep()
   
 if __name__ == '__main__':
   rospy.init_node('turtlesim_pub', anonymous = True)
