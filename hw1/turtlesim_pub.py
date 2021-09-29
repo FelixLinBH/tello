@@ -24,17 +24,17 @@ def turtle_pub():
   while not rospy.is_shutdown():
     msg = Twist()
     msg.linear.x = 10
-    msg.angular.y = angle
+    msg.angular.y = 60
     rospy.loginfo(msg)
     pub.publish(msg)
     rate.sleep()
 
-    msg = Twist()
-    msg.linear.x = 10
-    msg.angular.z = 72 - angle
-    rospy.loginfo(msg)
-    pub.publish(msg)
-    rate.sleep()
+    # msg = Twist()
+    # msg.linear.x = 10
+    # msg.angular.z = 72 - angle
+    # rospy.loginfo(msg)
+    # pub.publish(msg)
+    # rate.sleep()
   
 if __name__ == '__main__':
   rospy.init_node('turtlesim_pub', anonymous = True)
