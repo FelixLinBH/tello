@@ -26,13 +26,13 @@ def turtle_pub():
       msg.linear.x = 10
       rospy.loginfo(msg)
       pub.publish(msg)
-      rate.sleep()
+      rate.sleep(3)
 
       msg = Twist()
       msg.angular.z = 60
       rospy.loginfo(msg)
       pub.publish(msg)
-      rate.sleep()
+      rate.sleep(3)
 
     # msg = Twist()
     # msg.linear.x = 10
