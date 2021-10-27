@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 import rospy
-from h264_image_transport.msg import H264Packet
+from sensor_msgs.msg import CompressedImage
 from std_msgs.msg import Empty, UInt8
 from tello_driver.msg import test
 import av
@@ -90,7 +90,7 @@ def main():
     fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
     out = cv2.VideoWriter('test_contour.avi', fourcc, 10.0, (1920, 720))
     rospy.init_node('h264_listener')
-    rospy.Subscriber("/tello/image_raw/h264", H264Packet, callback)
+    rospy.Subscriber("/tello/image_raw/h264", CompressedImage, callback)
     pub = rospy.Publisher('/selfDefined', test, queue_size = 1)
     rospy.Subscriber('/selfChanged', Empty, changeCB)
     container = av.open(stream)
