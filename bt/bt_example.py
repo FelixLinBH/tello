@@ -24,6 +24,7 @@ class bt_mission:
     drone = tello_drone.Drone()
     isContinue = True
     center = (480, 180)
+    distance = 100
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
@@ -32,14 +33,14 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish >> (self.NotReady2Pass | self.PassAndSwitch) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
-            |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
+            # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
 
-    @condition
-    def BlueNotFinish(self):
-        print("condition: BlueNotFinish")
-        return bt_mission.color == "blue"
+    # @condition
+    # def BlueNotFinish(self):
+    #     print("condition: BlueNotFinish")
+    #     return bt_mission.color == "blue"
 
     @condition
     def RedNotFinish(self):
@@ -49,7 +50,7 @@ class bt_mission:
     @condition
     def NotReady2Pass(self):
         print("condition: NotReady2Pass")
-        return bt_mission.drone.suber.target[2] != -1
+        return bt_mission.drone.suber.target[3] != -1
 
     @condition
     def isNotCenter(self):
@@ -66,38 +67,38 @@ class bt_mission:
         print("condition: rec_over1")
         return rospy.get_time() - bt_mission.drone.suber.rec_time <= 1.0
 
-    @action
-    def PassAndSwitch(self):
-        print("action: PassAndSwitch")
-        msg = Twist()
-        msg.linear.x = 1
-        #msg.linear.y = -0.1
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
-        sleep(2)
-        msg = Twist()
-        msg.angular.x = 0.7
-        msg.angular.z = 0.05
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
-        sleep(2)
-        msg = Twist()
-        msg.angular.x = 0.3
-        msg.angular.z = 0.03
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
-        sleep(2)
-        msg = Twist()
-        msg.angular.z = 1
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
-        sleep(2)
-        bt_mission.change_pub.publish(Empty())
-        bt_mission.rate.sleep()
-        msg = Twist()
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
-        bt_mission.color = "blue"
+    # @action
+    # def PassAndSwitch(self):
+    #     print("action: PassAndSwitch")
+    #     msg = Twist()
+    #     msg.linear.x = 1
+    #     #msg.linear.y = -0.1
+    #     bt_mission.cmd_pub.publish(msg)
+    #     bt_mission.rate.sleep()
+    #     sleep(2)
+    #     msg = Twist()
+    #     msg.angular.x = 0.7
+    #     msg.angular.z = 0.05
+    #     bt_mission.cmd_pub.publish(msg)
+    #     bt_mission.rate.sleep()
+    #     sleep(2)
+    #     msg = Twist()
+    #     msg.angular.x = 0.3
+    #     msg.angular.z = 0.03
+    #     bt_mission.cmd_pub.publish(msg)
+    #     bt_mission.rate.sleep()
+    #     sleep(2)
+    #     msg = Twist()
+    #     msg.angular.z = 1
+    #     bt_mission.cmd_pub.publish(msg)
+    #     bt_mission.rate.sleep()
+    #     sleep(2)
+    #     bt_mission.change_pub.publish(Empty())
+    #     bt_mission.rate.sleep()
+    #     msg = Twist()
+    #     bt_mission.cmd_pub.publish(msg)
+    #     bt_mission.rate.sleep()
+    #     bt_mission.color = "blue"
 
 
     @action
@@ -135,13 +136,23 @@ class bt_mission:
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
+
     @action
-    def Forward(self):
-      print("action: Forward")
+    def FixedDistance(self):
+      print("action: FixedDistance")
       msg = Twist()
-      msg.linear.x = 0.35
+      if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 60:
+        msg.linear.x = -(bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.1
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
+
+    # @action
+    # def Forward(self):
+    #   print("action: Forward")
+    #   msg = Twist()
+    #   msg.linear.x = 0.35
+    #   bt_mission.cmd_pub.publish(msg)
+    #   bt_mission.rate.sleep()
 
     @action
     def hover(self):

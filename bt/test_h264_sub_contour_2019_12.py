@@ -53,6 +53,16 @@ stream = StandaloneVideoStream()
 
 global tag
 tag = 0
+
+# initialize the known distance from the camera to the object, which
+# in this case is 24 inches
+global KNOWN_DISTANCE
+KNOWN_DISTANCE = 10.0
+# initialize the known object width, which in this case, the piece of
+# paper is 12 inches wide
+global KNOWN_WIDTH
+KNOWN_WIDTH = 10.0
+
 def callback(msg):
   #rospy.loginfo('frame: %d bytes' % len(msg.data))
   #if len(msg.data) > 1000:  
@@ -83,6 +93,11 @@ def findMask1(img):
   #rm1 = cv2.inRange(img, lr1, ur1)
   #rm = cv2.bitwise_or(rm0, rm1)
   return rm0
+
+def distance_to_camera(knownWidth, focalLength, perWidth):
+  # compute and return the distance from the maker to the camera
+  return (knownWidth * focalLength) / perWidth
+
 
 def main():
     global tag
@@ -116,6 +131,8 @@ def main():
           out_max_contours = max(c_c, key = cv2.contourArea)
           rect = cv2.minAreaRect(out_max_contours)
           rect_width, rect_height = rect[1]
+          print(rect_width)
+          focalLength = (rect_width * KNOWN_DISTANCE) / KNOWN_WIDTH
           #avg_x = []
           #avg_y = []
           #for c in out_max_contours:
@@ -123,22 +140,22 @@ def main():
           #    avg_y.append(c[0][1])
           ce_x = rect[0][0] + 1/2*rect_width
           ce_y = rect[0][1] + 1/2*rect_height
-          if old_center[0] == 0 and old_center[1] == 0:
-            old_center = [int(ce_x),int(ce_y)]
-            pub.publish(test([int(old_center[0]),int(old_center[1]),1]))
+          if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
+            old_center = [int(ce_x),int(ce_y),int(focalLength)]
+            pub.publish(test([int(old_center[0]),int(old_center[1],int(focalLength)),1]))
           else:
             #print(math.sqrt( (int(mean_y) - old_center[0])**2 + (int(mean_x) - old_center[1])**2 ))
             cv2.putText(show_image, str(rect_width*rect_height/(960*720.0)), (10,40),5 ,2, 255)
             if rect_width*rect_height >= 960*720*0.25:
-              pub.publish(test([old_center[0],old_center[1],-1]))
+              pub.publish(test([old_center[0],old_center[1],old_center[2],-1]))
               print(">= 100")
               t = rospy.get_time()
               while rospy.get_time() - t < 1:
                 pass
               #rospy.signal_shutdown('Quit')
             else:
-              old_center = [int(ce_x),int(ce_y)]
-              pub.publish(test([int(old_center[0]),int(old_center[1]),1]))
+              old_center = [int(ce_x),int(ce_y),int(focalLength)]
+              pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
         
         out.write(np.concatenate((blurred_img, show_image), axis=1))
         cv2.imshow('result', np.concatenate((blurred_img, show_image), axis=1))

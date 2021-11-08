@@ -9,7 +9,7 @@ from tello_driver.msg import TelloStatus, test
 
 class Drone_Suber:
   def __init__(self):
-    self.target = (-1,-1,1)
+    self.target = (-1,-1,-1,1)
     self.canLand = False
     self.rec_time = 0
 
