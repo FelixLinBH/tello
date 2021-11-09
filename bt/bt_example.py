@@ -142,7 +142,7 @@ class bt_mission:
     @action
     def FixedDistance(self):
       print("action: FixedDistance")
-      print(t_mission.drone.suber.target[2])
+      print(bt_mission.drone.suber.target[2])
       msg = Twist()
       if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 60:
         msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.1
