@@ -142,7 +142,7 @@ def main():
           ce_y = rect[0][1] + 1/2*rect_height
           if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
             old_center = [int(ce_x),int(ce_y),int(focalLength)]
-            pub.publish(test([int(old_center[0]),int(old_center[1],int(focalLength)),1]))
+            pub.publish(test([int(old_center[0]),int(old_center[1]),int(focalLength),1]))
           else:
             #print(math.sqrt( (int(mean_y) - old_center[0])**2 + (int(mean_x) - old_center[1])**2 ))
             cv2.putText(show_image, str(rect_width*rect_height/(960*720.0)), (10,40),5 ,2, 255)
