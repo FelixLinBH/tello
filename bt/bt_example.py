@@ -33,9 +33,8 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            # self.RedNotFinish >> self.NotReady2Pass >> self.FixedDistance >> (self.rec_over1 | self.hover)
-
-            self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> self.NotReady2Pass >> ((self.isNotFitDistance >> self.FixedDistance) | (self.isNotCenter >> self.FixedPose)) >> self.isFitDistance >> self.isCenter >> (self.rec_over1 | self.hover)
+            # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
 
@@ -43,6 +42,17 @@ class bt_mission:
     # def BlueNotFinish(self):
     #     print("condition: BlueNotFinish")
     #     return bt_mission.color == "blue"
+
+    @condition
+    def isNotFitDistance(self):
+        print("condition: isFitDistance")
+        return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) > 30
+
+    @condition
+    def isFitDistance(self):
+        print("condition: isFitDistance")
+        return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) <= 30
+
 
     @condition
     def RedNotFinish(self):
