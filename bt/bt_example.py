@@ -23,7 +23,7 @@ class bt_mission:
     # common member
     drone = tello_drone.Drone()
     isContinue = True
-    center = (480, 360)
+    center = (480, 270)
     distance = 100
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
@@ -139,27 +139,29 @@ class bt_mission:
 
     @action
     def FixedPose(self):
-      print("action: FixedPose")
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
       if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
         msg.linear.y = -(bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
+        print("action: FixedPose y",msg.linear.y)
       if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 30:
         msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.2
+        print("action: FixedPose z",msg.linear.z)
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
 
     @action
     def FixedDistance(self):
-      print("action: FixedDistance")
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
       if bt_mission.drone.suber.target[2] < 30:
         msg.angular.z = 0.8
+        print("action: FixedDistance z",0.8)
       else:
         if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 30:
             msg.linear.x = (bt_mission.distance - bt_mission.drone.suber.target[2]) / abs(( bt_mission.distance - bt_mission.drone.suber.target[2])) * 0.4
+            print("action: FixedDistance x",msg.linear.x)
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
