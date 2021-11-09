@@ -45,7 +45,7 @@ class bt_mission:
 
     @condition
     def isNotFitDistance(self):
-        print("condition: isFitDistance")
+        print("condition: isNotFitDistance")
         return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) > 30
 
     @condition
@@ -152,14 +152,14 @@ class bt_mission:
     @action
     def FixedDistance(self):
       print("action: FixedDistance")
-      print(bt_mission.drone.suber.target[2])
+      print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
       if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 30:
-        if bt_mission.drone.suber.target[2] - bt_mission.distance > 0:
-            msg.linear.x = 0.35
-        else:
-            msg.linear.x = -0.35
-        # msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
+        # if bt_mission.drone.suber.target[2] - bt_mission.distance > 0:
+        #     msg.linear.x = 0.35
+        # else:
+        #     msg.linear.x = -0.35
+        msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
