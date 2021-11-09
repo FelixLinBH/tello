@@ -33,7 +33,7 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish >> self.NotReady2Pass >> ((self.isNotFitDistance >> self.FixedDistance) | (self.isNotCenter >> self.FixedPose)) >> self.isFitDistance >> self.isCenter >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> self.NotReady2Pass >> ((self.isNotFitDistance >> self.FixedDistance) | (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.rec_over1 | self.hover)
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
@@ -155,7 +155,11 @@ class bt_mission:
       print(bt_mission.drone.suber.target[2])
       msg = Twist()
       if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 30:
-        msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
+        if bt_mission.drone.suber.target[2] - bt_mission.distance > 0:
+            msg.linear.x = 0.3
+        else:
+            msg.linear.x = -0.3
+        # msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
