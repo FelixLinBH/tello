@@ -154,15 +154,11 @@ class bt_mission:
       print("action: FixedDistance")
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
-      if bt_mission.drone.suber.target[2]<50:
-        msg.angular.z = 0.2
+      if bt_mission.drone.suber.target[2] < 50:
+        msg.angular.z = 1
       else:
-        if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 30:
-        # if bt_mission.drone.suber.target[2] - bt_mission.distance > 0:
-        #     msg.linear.x = 0.35
-        # else:
-        #     msg.linear.x = -0.35
-            msg.linear.x = -(bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
+        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 30:
+            msg.linear.x = (bt_mission.distance - bt_mission.drone.suber.target[2]) / abs(( bt_mission.distance - bt_mission.drone.suber.target[2])) * 0.4
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
