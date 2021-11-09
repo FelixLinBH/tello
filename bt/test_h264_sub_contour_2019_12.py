@@ -101,7 +101,7 @@ def distance_to_camera(knownWidth, focalLength, perWidth):
 
 def main():
     global tag
-    old_center = [0,0]
+    old_center = [0,0,0]
     fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
     out = cv2.VideoWriter('test_contour.avi', fourcc, 10.0, (1920, 720))
     rospy.init_node('h264_listener')
