@@ -75,9 +75,9 @@ def changeCB(msg):
     tag = 1
 
 def findMask(img):
-  lr0 = np.array([155,25,0])
-  ur0 = np.array([179,255,255])
-  # lr1 = np.array([175,150,0])
+  lr0 = np.array([0,50,50])
+  ur0 = np.array([10,255,255])
+  # lr1 = np.array([170,50,50])
   # ur1 = np.array([180,255,255])
   rm0 = cv2.inRange(img, lr0, ur0)
   # rm1 = cv2.inRange(img, lr1, ur1)
