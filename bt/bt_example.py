@@ -11,10 +11,10 @@ from time import sleep
 rospy.init_node('bt_mission', anonymous=True)
 sleep(2)
 print("takeoff")
-# takeoff_pub = rospy.Publisher('/tello/takeoff', Empty, queue_size =1)
+takeoff_pub = rospy.Publisher('/tello/takeoff', Empty, queue_size =1)
 sleep(3)
 msg = Empty()
-# takeoff_pub.publish(msg)
+takeoff_pub.publish(msg)
 print("TakeOff done")
 sleep(3)
 
@@ -24,7 +24,7 @@ class bt_mission:
     drone = tello_drone.Drone()
     isContinue = True
     center = (480, 180)
-    distance = 200
+    distance = 100
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
@@ -33,9 +33,9 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish >> self.NotReady2Pass >> self.FixedDistance >> (self.rec_over1 | self.hover)
+            # self.RedNotFinish >> self.NotReady2Pass >> self.FixedDistance >> (self.rec_over1 | self.hover)
 
-            # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
 
@@ -144,8 +144,8 @@ class bt_mission:
       print("action: FixedDistance")
       print(bt_mission.drone.suber.target[2])
       msg = Twist()
-      if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 60:
-        msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.1
+      if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 30:
+        msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
 
