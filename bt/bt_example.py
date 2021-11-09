@@ -11,10 +11,10 @@ from time import sleep
 rospy.init_node('bt_mission', anonymous=True)
 sleep(2)
 print("takeoff")
-# takeoff_pub = rospy.Publisher('/tello/takeoff', Empty, queue_size =1)
+takeoff_pub = rospy.Publisher('/tello/takeoff', Empty, queue_size =1)
 sleep(3)
 msg = Empty()
-# takeoff_pub.publish(msg)
+takeoff_pub.publish(msg)
 print("TakeOff done")
 sleep(3)
 
