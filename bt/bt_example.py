@@ -11,10 +11,10 @@ from time import sleep
 rospy.init_node('bt_mission', anonymous=True)
 sleep(2)
 print("takeoff")
-takeoff_pub = rospy.Publisher('/tello/takeoff', Empty, queue_size =1)
+# takeoff_pub = rospy.Publisher('/tello/takeoff', Empty, queue_size =1)
 sleep(3)
 msg = Empty()
-takeoff_pub.publish(msg)
+# takeoff_pub.publish(msg)
 print("TakeOff done")
 sleep(3)
 
@@ -33,7 +33,9 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> self.NotReady2Pass >> self.FixedDistance >> (self.rec_over1 | self.hover)
+
+            # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
 
@@ -140,6 +142,7 @@ class bt_mission:
     @action
     def FixedDistance(self):
       print("action: FixedDistance")
+      print(t_mission.drone.suber.target[2])
       msg = Twist()
       if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 60:
         msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.1
