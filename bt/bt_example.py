@@ -23,7 +23,7 @@ class bt_mission:
     # common member
     drone = tello_drone.Drone()
     isContinue = True
-    center = (480, 180)
+    center = (480, 360)
     distance = 100
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
@@ -156,9 +156,9 @@ class bt_mission:
       msg = Twist()
       if abs(bt_mission.drone.suber.target[2] - bt_mission.distance) >= 30:
         if bt_mission.drone.suber.target[2] - bt_mission.distance > 0:
-            msg.linear.x = 0.3
+            msg.linear.x = 0.35
         else:
-            msg.linear.x = -0.3
+            msg.linear.x = -0.35
         # msg.linear.x = (bt_mission.drone.suber.target[2] - bt_mission.distance) / abs((bt_mission.drone.suber.target[2] - bt_mission.distance)) * 0.3
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
