@@ -45,38 +45,38 @@ class bt_mission:
 
     @condition
     def isNotFitDistance(self):
-        print("condition: isNotFitDistance")
+        # print("condition: isNotFitDistance")
         return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) > 30
 
     @condition
     def isFitDistance(self):
-        print("condition: isFitDistance")
+        # print("condition: isFitDistance")
         return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) <= 30
 
 
     @condition
     def RedNotFinish(self):
-        print("condition: RedNotFinish")
+        # print("condition: RedNotFinish")
         return bt_mission.color == "red"
 
     @condition
     def NotReady2Pass(self):
-        print("condition: NotReady2Pass")
+        # print("condition: NotReady2Pass")
         return bt_mission.drone.suber.target[3] != -1
 
     @condition
     def isNotCenter(self):
-        print("condition: isNotCenter")
+        # print("condition: isNotCenter")
         return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 60 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 30
 
     @condition
     def isCenter(self):
-        print("condition: isCenter")
+        # print("condition: isCenter")
         return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 60 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 30
 
     @condition
     def rec_over1(self):
-        print("condition: rec_over1")
+        # print("condition: rec_over1")
         return rospy.get_time() - bt_mission.drone.suber.rec_time <= 1.0
 
     # @action
@@ -115,7 +115,7 @@ class bt_mission:
 
     @action
     def PassAndLand(self):
-        print("action: PassAndLand")
+        # print("action: PassAndLand")
         msg = Twist()
         msg.linear.x = 0.3
         #msg.linear.z = 0.2
@@ -140,6 +140,7 @@ class bt_mission:
     @action
     def FixedPose(self):
       print("action: FixedPose")
+      print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
       if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
         msg.linear.y = -(bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
@@ -154,8 +155,8 @@ class bt_mission:
       print("action: FixedDistance")
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
-      if bt_mission.drone.suber.target[2] < 50:
-        msg.angular.z = 1
+      if bt_mission.drone.suber.target[2] < 30:
+        msg.angular.z = 0.8
       else:
         if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 30:
             msg.linear.x = (bt_mission.distance - bt_mission.drone.suber.target[2]) / abs(( bt_mission.distance - bt_mission.drone.suber.target[2])) * 0.4
@@ -172,7 +173,7 @@ class bt_mission:
 
     @action
     def hover(self):
-      print("action: hover")
+      # print("action: hover")
       msg = Twist()
       bt_mission.cmd_pub.publish(msg)
       bt_mission.rate.sleep()
