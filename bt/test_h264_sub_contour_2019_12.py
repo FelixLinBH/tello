@@ -75,14 +75,14 @@ def changeCB(msg):
     tag = 1
 
 def findMask(img):
-  lr0 = np.array([0,50,50])
+  lr0 = np.array([0,100,0])
   ur0 = np.array([10,255,255])
-  # lr1 = np.array([170,50,50])
-  # ur1 = np.array([180,255,255])
+  lr1 = np.array([170,100,0])
+  ur1 = np.array([180,255,255])
   rm0 = cv2.inRange(img, lr0, ur0)
-  # rm1 = cv2.inRange(img, lr1, ur1)
-  # rm = cv2.bitwise_or(rm0, rm1)
-  return rm0
+  rm1 = cv2.inRange(img, lr1, ur1)
+  rm = cv2.bitwise_or(rm0, rm1)
+  return rm
 
 def findMask1(img):
   lr0 = np.array([110,40,0])
@@ -146,16 +146,16 @@ def main():
           else:
             #print(math.sqrt( (int(mean_y) - old_center[0])**2 + (int(mean_x) - old_center[1])**2 ))
             cv2.putText(show_image, str(rect_width*rect_height/(960*720.0)), (10,40),5 ,2, 255)
-            # if rect_width*rect_height >= 960*720*0.25:
-            #   pub.publish(test([old_center[0],old_center[1],old_center[2],-1]))
-            #   print(">= 100")
-            #   t = rospy.get_time()
-            #   while rospy.get_time() - t < 1:
-            #     pass
-            #   #rospy.signal_shutdown('Quit')
-            # else:
-            old_center = [int(ce_x),int(ce_y),int(focalLength)]
-            pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
+            if rect_width*rect_height >= 960*720*0.25:
+              pub.publish(test([old_center[0],old_center[1],old_center[2],-1]))
+              print(">= 100")
+              t = rospy.get_time()
+              while rospy.get_time() - t < 1:
+                pass
+              #rospy.signal_shutdown('Quit')
+            else:
+              old_center = [int(ce_x),int(ce_y),int(focalLength)]
+              pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
         
         out.write(np.concatenate((blurred_img, show_image), axis=1))
         cv2.imshow('result', np.concatenate((blurred_img, show_image), axis=1))
