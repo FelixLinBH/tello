@@ -75,14 +75,16 @@ def changeCB(msg):
     tag = 1
 
 def findMask(img):
-  lr0 = np.array([0,100,0])
-  ur0 = np.array([10,255,255])
-  lr1 = np.array([170,100,0])
-  ur1 = np.array([180,255,255])
+  # 0,114,27~0,255,255
+
+  lr0 = np.array([0,114,27])
+  ur0 = np.array([0,255,255])
+  # lr1 = np.array([170,100,0])
+  # ur1 = np.array([180,255,255])
   rm0 = cv2.inRange(img, lr0, ur0)
-  rm1 = cv2.inRange(img, lr1, ur1)
-  rm = cv2.bitwise_or(rm0, rm1)
-  return rm
+  # rm1 = cv2.inRange(img, lr1, ur1)
+  # rm = cv2.bitwise_or(rm0, rm1)
+  return rm0
 
 def findMask1(img):
   lr0 = np.array([110,40,0])
