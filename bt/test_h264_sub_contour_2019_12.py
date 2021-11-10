@@ -133,7 +133,7 @@ def main():
           out_max_contours = max(c_c, key = cv2.contourArea)
           rect = cv2.minAreaRect(out_max_contours)
           rect_width, rect_height = rect[1]
-          # print(rect_width)
+          print(rect_width,rect_height)
           focalLength = (rect_width * KNOWN_DISTANCE) / KNOWN_WIDTH
           #avg_x = []
           #avg_y = []
