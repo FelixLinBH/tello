@@ -23,8 +23,8 @@ class bt_mission:
     # common member
     drone = tello_drone.Drone()
     isContinue = True
-    center = (480, 270)
-    distance = 40000
+    center = (480, 300)
+    distance = 30000
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
@@ -166,7 +166,10 @@ class bt_mission:
       else:
         msg = Twist()
         if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 2000:
-          msg.linear.x = (bt_mission.distance - bt_mission.drone.suber.target[2]) / abs(( bt_mission.distance - bt_mission.drone.suber.target[2])) * 0.4
+          if bt_mission.distance > bt_mission.drone.suber.target[2]:
+            msg.linear.x = 0.35
+          else:
+            msg.linear.x = -0.35
           print("action: FixedDistance x",msg.linear.x)
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
