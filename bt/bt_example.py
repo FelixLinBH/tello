@@ -33,7 +33,7 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish >> self.NotReady2Pass >> ((self.isNotFitDistance >> self.FixedDistance) | (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.rec_over1 | self.hover)
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
