@@ -29,6 +29,7 @@ class bt_mission:
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
     change_pub = rospy.Publisher('/selfChanged', Empty, queue_size = 10)
     rate = rospy.Rate(10)
+    distance = 30000
 
     def __init__(self):
         self.tree = (
