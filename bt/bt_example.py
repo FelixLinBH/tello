@@ -46,12 +46,12 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) > 2000
+        return bt_mission.drone.suber.target[2] > 2000
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return abs(bt_mission.drone.suber.target[2] - bt_mission.distance) <= 2000
+        return bt_mission.drone.suber.target[2] <= 2000
 
 
     @condition

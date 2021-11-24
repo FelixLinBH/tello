@@ -150,7 +150,7 @@ def main():
             else:
               #print(math.sqrt( (int(mean_y) - old_center[0])**2 + (int(mean_x) - old_center[1])**2 ))
               # cv2.putText(show_image, str(rect_width*rect_height/(960*720.0)), (10,40),5 ,2, 255)
-              if rect_width*rect_height >= 960*720*0.25:
+              if w*h >= 960*720*0.25:
                 pub.publish(test([old_center[0],old_center[1],old_center[2],-1]))
                 print(">= 100")
                 t = rospy.get_time()
