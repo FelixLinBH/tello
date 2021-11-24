@@ -144,22 +144,24 @@ def main():
             cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
             ce_x = x + 1/2*w
             ce_y = y + 1/2*h
-            if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
-              old_center = [int(ce_x),int(ce_y),int(area)]
-              pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
-            else:
-              #print(math.sqrt( (int(mean_y) - old_center[0])**2 + (int(mean_x) - old_center[1])**2 ))
-              # cv2.putText(show_image, str(rect_width*rect_height/(960*720.0)), (10,40),5 ,2, 255)
-              if w*h >= 960*720*0.25:
-                pub.publish(test([old_center[0],old_center[1],old_center[2],-1]))
-                print(">= 100")
-                t = rospy.get_time()
-                while rospy.get_time() - t < 1:
-                  pass
-                #rospy.signal_shutdown('Quit')
-              else:
-                old_center = [int(ce_x),int(ce_y),int(area)]
-                pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
+            old_center = [int(ce_x),int(ce_y),int(area)]
+            pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
+            # if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
+            #   old_center = [int(ce_x),int(ce_y),int(area)]
+            #   pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
+            # else:
+            #   #print(math.sqrt( (int(mean_y) - old_center[0])**2 + (int(mean_x) - old_center[1])**2 ))
+            #   # cv2.putText(show_image, str(rect_width*rect_height/(960*720.0)), (10,40),5 ,2, 255)
+            #   if w*h >= 960*720*0.25:
+            #     pub.publish(test([old_center[0],old_center[1],old_center[2],-1]))
+            #     print(">= 100")
+            #     t = rospy.get_time()
+            #     while rospy.get_time() - t < 1:
+            #       pass
+            #     #rospy.signal_shutdown('Quit')
+            #   else:
+            #     old_center = [int(ce_x),int(ce_y),int(area)]
+            #     pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
         # 
         # image = cv2.cvtColor(np.array(frame.to_image()), cv2.COLOR_RGB2BGR)
         # blurred_img = cv2.GaussianBlur(image, (13, 13), 0)
