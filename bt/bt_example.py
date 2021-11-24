@@ -24,7 +24,6 @@ class bt_mission:
     drone = tello_drone.Drone()
     isContinue = True
     center = (480, 270)
-    distance = 40000
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
@@ -46,12 +45,12 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 40000
+        return bt_mission.drone.suber.target[2] > 30000 or bt_mission.drone.suber.target[2] < 20000
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] <= 40000
+        return bt_mission.drone.suber.target[2] <= 30000 and bt_mission.drone.suber.target[2] >= 20000
 
 
     @condition
@@ -147,7 +146,7 @@ class bt_mission:
       else:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
-          msg.linear.z = -(bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
+          msg.linear.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
           print("action: FixedPose y",msg.linear.y)
         if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 60:
           msg.linear.y = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.2
