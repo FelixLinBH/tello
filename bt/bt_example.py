@@ -151,7 +151,7 @@ class bt_mission:
           print("action: FixedPose x",msg.linear.x)
         else:
           if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 60:
-            msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.3
+            msg.linear.z = (bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.3
             print("action: FixedPose z",msg.linear.z)
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
