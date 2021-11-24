@@ -141,7 +141,7 @@ def main():
           areaMin = 1700
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
-            # cv2.rectangle(show_image,(x,y),(x+w,y+h),(0,255,255),2)
+            cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
             ce_x = x + 1/2*w
             ce_y = y + 1/2*h
             if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
@@ -203,8 +203,8 @@ def main():
         #       old_center = [int(ce_x),int(ce_y),int(focalLength)]
         #       pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
         
-        # out.write(np.concatenate((blurred_img, show_image), axis=1))
-        # cv2.imshow('result', np.concatenate((blurred_img, show_image), axis=1))
+        out.write(np.concatenate((blurred_img, hsv), axis=1))
+        cv2.imshow('result', np.concatenate((blurred_img, hsv), axis=1))
         cv2.waitKey(1)
         if frame.time_base < 1.0/60:
           time_base = 1.0/60
