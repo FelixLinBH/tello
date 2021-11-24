@@ -24,7 +24,7 @@ class bt_mission:
     drone = tello_drone.Drone()
     isContinue = True
     center = (480, 270)
-    distance = 80
+    distance = 20000
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
@@ -46,12 +46,12 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 2000
+        return bt_mission.drone.suber.target[2] > distance
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] <= 2000
+        return bt_mission.drone.suber.target[2] <= distance
 
 
     @condition
@@ -67,12 +67,12 @@ class bt_mission:
     @condition
     def isNotCenter(self):
         # print("condition: isNotCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 60 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 30
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 60 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 60
 
     @condition
     def isCenter(self):
         # print("condition: isCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 60 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 30
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 60 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 60
 
     @condition
     def rec_over1(self):
@@ -144,7 +144,7 @@ class bt_mission:
       if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
         msg.linear.y = -(bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
         print("action: FixedPose y",msg.linear.y)
-      if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 30:
+      if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 60:
         msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.2
         print("action: FixedPose z",msg.linear.z)
       bt_mission.cmd_pub.publish(msg)
@@ -155,7 +155,7 @@ class bt_mission:
     def FixedDistance(self):
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       msg = Twist()
-      if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 30:
+      if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 2000:
         msg.linear.x = (bt_mission.distance - bt_mission.drone.suber.target[2]) / abs(( bt_mission.distance - bt_mission.drone.suber.target[2])) * 0.4
         print("action: FixedDistance x",msg.linear.x)
       bt_mission.cmd_pub.publish(msg)
