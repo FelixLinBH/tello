@@ -165,12 +165,12 @@ class bt_mission:
     def FixedDistance(self):
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       if bt_mission.drone.suber.target[0] == -1 or bt_mission.drone.suber.target[1] == -1 or bt_mission.drone.suber.target[2] == -1:
-        msg = Twist()
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
+        # msg = Twist()
+        # bt_mission.cmd_pub.publish(msg)
+        # bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 10000:
+        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 3000:
           if bt_mission.distance > bt_mission.drone.suber.target[2]:
             msg.linear.y = 0.3
           else:
