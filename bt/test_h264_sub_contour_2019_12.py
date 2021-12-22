@@ -144,11 +144,14 @@ def main():
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
             
-            if tag == 0:
-              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
-            elif tag == 1:
+            if area >= 20000 and area <= 40000:
               cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
-
+            else:
+              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+            # if tag == 0:
+            #   cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+            # elif tag == 1:
+            #   cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
             ce_x = x + w/2
             ce_y = y + h/2
             cv2.circle(hsv,(ce_x,ce_y),5,(0,255,0),5)
