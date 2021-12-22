@@ -33,7 +33,7 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance >> self.not_full)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
@@ -155,6 +155,8 @@ class bt_mission:
             print("action: FixedPose z",msg.linear.z)
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
+      bt_mission.change_pub.publish(0)
+      bt_mission.rate.sleep()
 
 
     @action
@@ -175,16 +177,13 @@ class bt_mission:
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
 
+      bt_mission.change_pub.publish(0)
+      bt_mission.rate.sleep()
+
     @action
     def full(self):
       print("action: full")
       bt_mission.change_pub.publish(1)
-      bt_mission.rate.sleep()
-
-    @action
-    def not_full(self):
-      print("action: not_full")
-      bt_mission.change_pub.publish(0)
       bt_mission.rate.sleep()
 
     @action

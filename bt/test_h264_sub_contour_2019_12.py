@@ -70,10 +70,10 @@ def callback(msg):
 
 
 def changeCB(msg):
-  print("changeCB",msg)
+  print("changeCB",msg.data)
   global tag
   if msg:
-    tag = msg
+    tag = msg.data
 
 
 def findMask(img):
