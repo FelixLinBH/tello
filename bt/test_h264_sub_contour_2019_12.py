@@ -151,6 +151,7 @@ def main():
 
             ce_x = x + 1/2*w
             ce_y = y + 1/2*h
+            cv2.circle(hsv,(ce_x,ce_y),5,(0,255,0),5)
             old_center = [int(ce_x),int(ce_y),int(area)]
             pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
             # if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
