@@ -170,10 +170,10 @@ class bt_mission:
         msg = Twist()
         if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 2000:
           if bt_mission.distance > bt_mission.drone.suber.target[2]:
-            msg.linear.x = -0.3
+            msg.linear.y = -0.3
           else:
-            msg.linear.x = 0.3
-          print("action: FixedDistance linear x",msg.linear.x)
+            msg.linear.y = 0.3
+          print("action: FixedDistance linear y",msg.linear.x)
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
 
