@@ -33,7 +33,7 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> self.isFitDistance >> (self.rec_over1 | self.hover)
+            self.RedNotFinish >> ((self.isNotCenter >> self.FixedPose >> self.not_full) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance >> self.not_full)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
         )
@@ -67,12 +67,12 @@ class bt_mission:
     @condition
     def isNotCenter(self):
         # print("condition: isNotCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 60 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 60
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 20 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 20
 
     @condition
     def isCenter(self):
         # print("condition: isCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 60 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 60
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 20 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 20
 
     @condition
     def rec_over1(self):
@@ -175,13 +175,15 @@ class bt_mission:
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
 
-    # @action
-    # def Forward(self):
-    #   print("action: Forward")
-    #   msg = Twist()
-    #   msg.linear.x = 0.35
-    #   bt_mission.cmd_pub.publish(msg)
-    #   bt_mission.rate.sleep()
+    @action
+    def full(self):
+      print("action: full")
+      bt_mission.change_pub.publish(1)
+
+    @action
+    def not_full(self):
+      print("action: not_full")
+      bt_mission.change_pub.publish(0)
 
     @action
     def hover(self):

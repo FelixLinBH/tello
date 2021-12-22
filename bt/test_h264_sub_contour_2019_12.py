@@ -72,7 +72,7 @@ def callback(msg):
 def changeCB(msg):
   global tag
   if msg:
-    tag = 1
+    tag = msg
 
 
 def findMask(img):
@@ -134,7 +134,7 @@ def main():
         mask = cv2.inRange(hsv, greenLower, greenUpper)
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
-        cv2.circle(hsv,(480,270),10,(255,0,0),5)
+        cv2.circle(hsv,(480,270),20,(255,0,0),5)
 
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2]
         for cnt in cnts:
@@ -142,7 +142,12 @@ def main():
           areaMin = 1700
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
-            cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+            
+            if tag == 0:
+              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+            elif tag == 1:
+              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,0),2)
+              
             ce_x = x + 1/2*w
             ce_y = y + 1/2*h
             old_center = [int(ce_x),int(ce_y),int(area)]
