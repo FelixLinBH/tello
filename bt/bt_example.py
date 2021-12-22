@@ -23,7 +23,7 @@ class bt_mission:
     # common member
     drone = tello_drone.Drone()
     isContinue = True
-    center = (360, 270)
+    center = (480, 270)
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
