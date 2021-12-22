@@ -29,7 +29,7 @@ class bt_mission:
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
     change_pub = rospy.Publisher('/selfChanged', Empty, queue_size = 10)
     rate = rospy.Rate(10)
-    distance = 30000
+    distance = 25000
 
     def __init__(self):
         self.tree = (
@@ -166,7 +166,7 @@ class bt_mission:
         bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 2000:
+        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 5000:
           if bt_mission.distance > bt_mission.drone.suber.target[2]:
             msg.linear.y = 0.3
           else:
