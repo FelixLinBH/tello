@@ -83,7 +83,7 @@ class bt_mission:
 
     @condition
     def rec_over1(self):
-        # print("condition: rec_over1")
+        print("condition: rec_over1")
         return rospy.get_time() - bt_mission.drone.suber.rec_time <= 1.0
 
     # @action
@@ -148,9 +148,10 @@ class bt_mission:
     def FixedPose(self):
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       if bt_mission.drone.suber.target[0] == -1 or bt_mission.drone.suber.target[1] == -1 or bt_mission.drone.suber.target[2] == -1:
-        msg = Twist()
-        bt_mission.cmd_pub.publish(msg)
-        bt_mission.rate.sleep()
+        print("skip")
+        # msg = Twist()
+        # bt_mission.cmd_pub.publish(msg)
+        # bt_mission.rate.sleep()
       else:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
