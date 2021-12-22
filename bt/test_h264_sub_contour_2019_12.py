@@ -110,7 +110,7 @@ def main():
     rospy.init_node('h264_listener')
     rospy.Subscriber("/tello/image_raw/h264", CompressedImage, callback)
     pub = rospy.Publisher('/selfDefined', test, queue_size = 1)
-    rospy.Subscriber('/selfChanged', Empty, changeCB)
+    rospy.Subscriber('/selfChanged', UInt8, changeCB)
     container = av.open(stream)
     rospy.loginfo('main: opened')
     frame_skip = 300

@@ -27,7 +27,7 @@ class bt_mission:
     color = "red"
     cmd_pub = rospy.Publisher('/tello/cmd_vel', Twist, queue_size = 10)
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
-    change_pub = rospy.Publisher('/selfChanged', Empty, queue_size = 10)
+    change_pub = rospy.Publisher('/selfChanged', UInt8, queue_size = 10)
     rate = rospy.Rate(10)
     distance = 30000
 
