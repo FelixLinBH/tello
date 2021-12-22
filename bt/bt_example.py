@@ -33,8 +33,8 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            # self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
-            self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.isCenter >> self.full) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
+            # self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.isCenter >> self.full) >> (self.rec_over1 | self.hover)
 
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
@@ -149,8 +149,9 @@ class bt_mission:
       else:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 40:
-          msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.4
-          print("action: FixedPose angular z",msg.angular.z)
+          # msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.4
+          msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
+          print("action: FixedPose linear x",msg.angular.x)
         else:
           if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 40:
             msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.4
