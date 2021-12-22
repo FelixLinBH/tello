@@ -69,12 +69,12 @@ class bt_mission:
     @condition
     def isNotCenter(self):
         # print("condition: isNotCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 40 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 40
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 60 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 60
 
     @condition
     def isCenter(self):
         # print("condition: isCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 40 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 40
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 60 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 60
 
     @condition
     def rec_over1(self):
@@ -157,8 +157,9 @@ class bt_mission:
             print("action: FixedPose linear z",msg.linear.z)
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
-      bt_mission.change_pub.publish(0)
-      bt_mission.rate.sleep()
+        bt_mission.change_pub.publish(0)
+        bt_mission.rate.sleep()
+      
 
 
     @action
@@ -179,9 +180,10 @@ class bt_mission:
           print("action: FixedDistance linear y",msg.linear.x)
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
+          bt_mission.change_pub.publish(0)
+          bt_mission.rate.sleep()
 
-      bt_mission.change_pub.publish(0)
-      bt_mission.rate.sleep()
+      
 
     @action
     def full(self):
