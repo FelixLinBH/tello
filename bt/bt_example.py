@@ -150,7 +150,7 @@ class bt_mission:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 40:
           # msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.4
-          msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
+          msg.linear.x = -(bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
           print("action: FixedPose linear x",msg.angular.x)
         else:
           if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 40:
