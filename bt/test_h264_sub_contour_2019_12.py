@@ -140,11 +140,11 @@ def main():
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2]
         for cnt in cnts:
           area = cv2.contourArea(cnt)
-          areaMin = 1700
+          areaMin = 1000
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
             
-            if area >= 20000 and area <= 40000:
+            if area >= 7000 and area <= 10000:
               cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
             else:
               cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)

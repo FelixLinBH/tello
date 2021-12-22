@@ -29,12 +29,12 @@ class bt_mission:
     land_pub = rospy.Publisher('/tello/land', Empty, queue_size = 1)
     change_pub = rospy.Publisher('/selfChanged', UInt8, queue_size = 10)
     rate = rospy.Rate(10)
-    distance = 30000
+    distance = 7000
 
     def __init__(self):
         self.tree = (
-            # self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> self.isFitDistance >> (self.rec_over1 | self.hover)
-            self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> self.isCenter  >> (self.rec_over1 | self.hover)
+            self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> self.isFitDistance >> (self.rec_over1 | self.hover)
+            # self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> self.isCenter  >> (self.rec_over1 | self.hover)
 
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
@@ -46,19 +46,14 @@ class bt_mission:
     #     return bt_mission.color == "blue"
 
     @condition
-    def isTooColse(self):
-        # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] > 40000
-
-    @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 40000 or bt_mission.drone.suber.target[2] < 20000
+        return bt_mission.drone.suber.target[2] > 10000 or bt_mission.drone.suber.target[2] < 4000
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] <= 40000 and bt_mission.drone.suber.target[2] >= 20000
+        return bt_mission.drone.suber.target[2] <= 10000 and bt_mission.drone.suber.target[2] >= 4000
 
 
     @condition
