@@ -48,12 +48,12 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 40000 or bt_mission.drone.suber.target[2] < 20000
+        return bt_mission.drone.suber.target[2] > 36000 or bt_mission.drone.suber.target[2] < 24000
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] <= 40000 and bt_mission.drone.suber.target[2] >= 20000
+        return bt_mission.drone.suber.target[2] <= 36000 and bt_mission.drone.suber.target[2] >= 24000
 
 
     @condition
@@ -149,11 +149,11 @@ class bt_mission:
       else:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 40:
-          msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.3
+          msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.4
           print("action: FixedPose angular z",msg.angular.z)
         else:
           if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 40:
-            msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.3
+            msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.4
             print("action: FixedPose linear z",msg.linear.z)
         bt_mission.cmd_pub.publish(msg)
         bt_mission.rate.sleep()
@@ -174,9 +174,9 @@ class bt_mission:
         msg = Twist()
         if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 3000:
           if bt_mission.distance > bt_mission.drone.suber.target[2]:
-            msg.linear.y = 0.3
+            msg.linear.y = 0.2
           else:
-            msg.linear.y = -0.3
+            msg.linear.y = -0.2
           print("action: FixedDistance linear y",msg.linear.x)
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
