@@ -67,12 +67,12 @@ class bt_mission:
     @condition
     def isNotCenter(self):
         # print("condition: isNotCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 20 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 20
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 40 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 40
 
     @condition
     def isCenter(self):
         # print("condition: isCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 20 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 20
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 40 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 40
 
     @condition
     def rec_over1(self):
@@ -146,11 +146,11 @@ class bt_mission:
         bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 20:
+        if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 40:
           msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.3
           print("action: FixedPose angular z",msg.angular.z)
         else:
-          if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 20:
+          if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 40:
             msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.3
             print("action: FixedPose linear z",msg.linear.z)
         bt_mission.cmd_pub.publish(msg)
