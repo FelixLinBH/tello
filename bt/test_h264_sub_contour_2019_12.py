@@ -134,7 +134,7 @@ def main():
         mask = cv2.inRange(hsv, greenLower, greenUpper)
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
-        cv2.circle(hsv,(480,270),10,(255,0,0),5)
+        # cv2.circle(hsv,(480,270),10,(255,0,0),5)
 
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2]
         for cnt in cnts:
@@ -142,9 +142,13 @@ def main():
           areaMin = 1700
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
-            cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
-            ce_x = x + 1/2*w
-            ce_y = y + 1/2*h
+            if area >= 20000 and area <= 40000:
+              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
+            else:
+              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+              
+            ce_x = x + w/2
+            ce_y = y + h/2
             old_center = [int(ce_x),int(ce_y),int(area)]
             pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
             # if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
