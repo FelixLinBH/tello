@@ -156,10 +156,10 @@ class bt_mission:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
           msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
-          msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
-          print("action: FixedPose linear x",msg.angular.x)
+          # msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
+          print("action: FixedPose linear x",msg.angular.z)
           bt_mission.cmd_pub.publish(msg)
-          # bt_mission.rate.sleep()
+          bt_mission.rate.sleep()
           bt_mission.change_pub.publish(0)
           bt_mission.rate.sleep()
         else:
@@ -167,7 +167,7 @@ class bt_mission:
             msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.4
             print("action: FixedPose linear z",msg.linear.z)
             bt_mission.cmd_pub.publish(msg)
-            # bt_mission.rate.sleep()
+            bt_mission.rate.sleep()
             bt_mission.change_pub.publish(0)
             bt_mission.rate.sleep()
         
@@ -189,7 +189,7 @@ class bt_mission:
             msg.linear.y = -0.2
           print("action: FixedDistance linear y",msg.linear.x)
           bt_mission.cmd_pub.publish(msg)
-          # bt_mission.rate.sleep()
+          bt_mission.rate.sleep()
           bt_mission.change_pub.publish(0)
           bt_mission.rate.sleep()
 
@@ -198,7 +198,7 @@ class bt_mission:
       print("action: hover")
       msg = Twist()
       bt_mission.cmd_pub.publish(msg)
-      # bt_mission.rate.sleep()
+      bt_mission.rate.sleep()
       bt_mission.change_pub.publish(1)
       bt_mission.rate.sleep()
 
