@@ -147,7 +147,7 @@ def main():
             if tag == 0:
               cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
             elif tag == 1:
-              cv2.rectangle(hsv,(x,y),(x+w,y+h),(255,0,0),2)
+              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
 
             ce_x = x + 1/2*w
             ce_y = y + 1/2*h

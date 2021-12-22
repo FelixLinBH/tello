@@ -33,7 +33,7 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish  >> (self.isTooColse >> self.leaveDistance) >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
             # self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.isCenter >> self.full) >> (self.rec_over1 | self.hover)
 
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
@@ -44,6 +44,11 @@ class bt_mission:
     # def BlueNotFinish(self):
     #     print("condition: BlueNotFinish")
     #     return bt_mission.color == "blue"
+
+    @condition
+    def isTooColse(self):
+        # print("condition: isFitDistance")
+        return bt_mission.drone.suber.target[2] > 40000
 
     @condition
     def isNotFitDistance(self):
@@ -149,8 +154,8 @@ class bt_mission:
       else:
         msg = Twist()
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
-          msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
-          msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
+          msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
+          msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
           print("action: FixedPose linear x",msg.angular.x)
         else:
           if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 60:
@@ -162,6 +167,14 @@ class bt_mission:
         bt_mission.rate.sleep()
       
 
+    @action
+    def leaveDistance(self):
+      msg = Twist()
+      msg.linear.y = -0.2
+      bt_mission.cmd_pub.publish(msg)
+      bt_mission.rate.sleep()
+      bt_mission.change_pub.publish(0)
+      bt_mission.rate.sleep()
 
     @action
     def FixedDistance(self):
