@@ -165,6 +165,7 @@ class bt_mission:
     def FixedDistance(self):
       print(bt_mission.drone.suber.target[0],bt_mission.drone.suber.target[1],bt_mission.drone.suber.target[2])
       if bt_mission.drone.suber.target[0] == -1 or bt_mission.drone.suber.target[1] == -1 or bt_mission.drone.suber.target[2] == -1:
+        print("action: FixedDistance ")
         # msg = Twist()
         # bt_mission.cmd_pub.publish(msg)
         # bt_mission.rate.sleep()
