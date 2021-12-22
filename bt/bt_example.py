@@ -33,8 +33,8 @@ class bt_mission:
 
     def __init__(self):
         self.tree = (
-            # self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
-            self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.isCenter >> self.full) >> (self.rec_over1 | self.hover)
+            self.RedNotFinish  >> ((self.isNotCenter >> self.FixedPose) >> (self.isCenter >> self.isNotFitDistance >> self.FixedDistance)) >> (self.isFitDistance >> self.full) >> (self.rec_over1 | self.hover)
+            # self.RedNotFinish  >> ((self.isNotFitDistance >> self.FixedDistance) >> (self.isFitDistance >> self.isNotCenter >> self.FixedPose)) >> (self.isCenter >> self.full) >> (self.rec_over1 | self.hover)
 
             # self.RedNotFinish >> self.NotReady2Pass >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.FixedDistance) ) >> (self.rec_over1 | self.hover)
             # |self.BlueNotFinish >> (self.NotReady2Pass | self.PassAndLand) >> ( (self.isNotCenter >> self.FixedPose) | (self.isCenter >> self.Forward) ) >> (self.rec_over1 | self.hover)
@@ -48,12 +48,12 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 30000 or bt_mission.drone.suber.target[2] < 20000
+        return bt_mission.drone.suber.target[2] > 40000 or bt_mission.drone.suber.target[2] < 20000
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] <= 30000 and bt_mission.drone.suber.target[2] >= 20000
+        return bt_mission.drone.suber.target[2] <= 40000 and bt_mission.drone.suber.target[2] >= 20000
 
 
     @condition
@@ -170,7 +170,7 @@ class bt_mission:
         bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 2000:
+        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 10000:
           if bt_mission.distance > bt_mission.drone.suber.target[2]:
             msg.linear.y = 0.3
           else:
