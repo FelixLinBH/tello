@@ -69,12 +69,12 @@ class bt_mission:
     @condition
     def isNotCenter(self):
         # print("condition: isNotCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 40 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 40
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) > 60 or abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) > 60
 
     @condition
     def isCenter(self):
         # print("condition: isCenter")
-        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 40 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 40
+        return abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) <= 60 and abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) <= 60
 
     @condition
     def rec_over1(self):
@@ -148,12 +148,12 @@ class bt_mission:
         bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 40:
-          # msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.4
-          msg.linear.x = -(bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
+        if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
+          msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
+          msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
           print("action: FixedPose linear x",msg.angular.x)
         else:
-          if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 40:
+          if abs(bt_mission.drone.suber.target[1] - bt_mission.center[1]) >= 60:
             msg.linear.z = -(bt_mission.drone.suber.target[1] - bt_mission.center[1]) / abs((bt_mission.drone.suber.target[1] - bt_mission.center[1])) * 0.4
             print("action: FixedPose linear z",msg.linear.z)
         bt_mission.cmd_pub.publish(msg)
