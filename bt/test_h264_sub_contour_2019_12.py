@@ -142,6 +142,7 @@ def main():
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
             cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+            cv2.circle(hsv,(360,270),5,(0,0,255),5)
             ce_x = x + 1/2*w
             ce_y = y + 1/2*h
             old_center = [int(ce_x),int(ce_y),int(area)]
