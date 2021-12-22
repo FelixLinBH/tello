@@ -53,7 +53,7 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 36000 or bt_mission.drone.suber.target[2] < 24000
+        return bt_mission.drone.suber.target[2] > 40000 or bt_mission.drone.suber.target[2] < 20000
 
     @condition
     def isFitDistance(self):
@@ -182,7 +182,7 @@ class bt_mission:
         # bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 3000:
+        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 2000:
           if bt_mission.distance > bt_mission.drone.suber.target[2]:
             msg.linear.y = 0.2
           else:
