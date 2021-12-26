@@ -135,7 +135,7 @@ def main():
         mask = cv2.inRange(hsv, greenLower, greenUpper)
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
-        cv2.circle(hsv,(480,270),40,(255,0,0),5)
+        # cv2.circle(hsv,(480,270),40,(255,0,0),5)
 
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2]
         for cnt in cnts:
