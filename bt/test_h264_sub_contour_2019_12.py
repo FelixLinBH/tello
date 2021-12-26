@@ -144,7 +144,7 @@ def main():
           if area > areaMin:
             x,y,w,h = cv2.boundingRect(cnt)
             
-            if area >= 7000 and area <= 10000:
+            if area >= 7000 and area <= 20000:
               cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
             else:
               cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)

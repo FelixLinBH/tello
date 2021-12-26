@@ -48,12 +48,12 @@ class bt_mission:
     @condition
     def isNotFitDistance(self):
         # print("condition: isNotFitDistance")
-        return bt_mission.drone.suber.target[2] > 10000 or bt_mission.drone.suber.target[2] < 4000
+        return bt_mission.drone.suber.target[2] > 20000 or bt_mission.drone.suber.target[2] < 7000
 
     @condition
     def isFitDistance(self):
         # print("condition: isFitDistance")
-        return bt_mission.drone.suber.target[2] <= 10000 and bt_mission.drone.suber.target[2] >= 4000
+        return bt_mission.drone.suber.target[2] <= 20000 and bt_mission.drone.suber.target[2] >= 7000
 
 
     @condition
@@ -177,14 +177,25 @@ class bt_mission:
         # bt_mission.rate.sleep()
       else:
         msg = Twist()
-        if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 3000:
-          if bt_mission.distance > bt_mission.drone.suber.target[2]:
-            msg.linear.y = 0.2
-          else:
-            msg.linear.y = -0.2
+        if bt_mission.drone.suber.target[2] < 7000:
+          msg.linear.y = 0.2
           print("action: FixedDistance linear y",msg.linear.x)
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
+        else:
+          if bt_mission.drone.suber.target[2] > 20000:
+            msg.linear.y = -0.2
+            print("action: FixedDistance linear y",msg.linear.x)
+            bt_mission.cmd_pub.publish(msg)
+            bt_mission.rate.sleep()
+        # if abs(bt_mission.distance - bt_mission.drone.suber.target[2]) >= 3000:
+        #   if bt_mission.distance > bt_mission.drone.suber.target[2]:
+        #     msg.linear.y = 0.2
+        #   else:
+        #     msg.linear.y = -0.2
+          # print("action: FixedDistance linear y",msg.linear.x)
+          # bt_mission.cmd_pub.publish(msg)
+          # bt_mission.rate.sleep()
           # bt_mission.change_pub.publish(0)
           # bt_mission.rate.sleep()
 
