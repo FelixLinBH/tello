@@ -1,5 +1,5 @@
 ros_path = '/opt/ros/kinetic/lib/python2.7/dist-packages'
-
+import sys
 if ros_path in sys.path:
 
     sys.path.remove()
