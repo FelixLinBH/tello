@@ -1,5 +1,13 @@
+ros_path = '/opt/ros/kinetic/lib/python2.7/dist-packages'
+
+if ros_path in sys.path:
+
+    sys.path.remove()
+
 import cv2
 from cvzone.HandTrackingModule import HandDetector
+
+sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 cap=cv2.VideoCapture(0)
 
