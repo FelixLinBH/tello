@@ -2,7 +2,7 @@ ros_path = '/opt/ros/kinetic/lib/python2.7/dist-packages'
 import sys
 if ros_path in sys.path:
 
-    sys.path.remove()
+    sys.path.remove(ros_path)
 
 import cv2
 from cvzone.HandTrackingModule import HandDetector
