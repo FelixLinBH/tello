@@ -8,7 +8,7 @@ if ros_path in sys.path:
     
 import cv2
 
-sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
+# sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 
 #Initializations: static code
