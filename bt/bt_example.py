@@ -232,7 +232,7 @@ def main():
     try:
         btCm_n.run()
         rospy.spin()
-    except IOError, KeyboardInterrupt:
+    except KeyboardInterrupt:
         print("Shutting down ROS module")
 
 if __name__ == "__main__":
