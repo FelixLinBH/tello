@@ -214,12 +214,12 @@ class bt_mission:
                 break
             bb = self.tree.blackboard(1)
             state = bb.tick()
-            print "state = %s\n" % state
+            # print "state = %s\n" % state
             #if bt_mission.drone.isStop == True:
             #  exec("f = open(\"123.txt\",\'rb\')")           
             while state == RUNNING:
                 state = bb.tick()
-                print "state = %s\n" % state
+                # print "state = %s\n" % state
                 #if bt_mission.drone.isStop == True:
                 #  exec("f = open(\"123.txt\",\'rb\')")
             assert state == SUCCESS or state == FAILURE
