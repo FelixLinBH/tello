@@ -149,6 +149,7 @@ def main():
         hsv = cv2.cvtColor(blurred_img.copy(), cv2.COLOR_BGR2HSV)
         # blurred = cv2.GaussianBlur(frame, (11, 11), 0)
 
+        
         # construct a mask for the color "green", then perform
         # a series of dilations and erosions to remove any small
         # blobs left in the mask
@@ -239,6 +240,7 @@ def main():
         #       pub.publish(test([int(old_center[0]),int(old_center[1]),int(old_center[2]),1]))
         
         out.write(np.concatenate((blurred_img, hsv), axis=1))
+        cv2.circle(hsv,(handLandmarks[9][1],handLandmarks[9][2]),5,(0,255,0),5)
         cv2.putText(hsv, str(count), (45, 375), cv2.FONT_HERSHEY_SIMPLEX, 5, (255, 0, 0), 25)
 
         cv2.imshow('result', np.concatenate((blurred_img, hsv), axis=1))
