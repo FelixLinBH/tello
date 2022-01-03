@@ -164,26 +164,34 @@ def main():
                 count = count+1
             cv2.circle(hsv,(handLandmarks[9][1],handLandmarks[9][2]),5,(0,255,0),5)
 
+            area = 15000
+            if count == 1:
+                area = 5000
+            elif count == 2:
+                area = 22000
+                
+            pub.publish(test([handLandmarks[9][1],handLandmarks[9][2],int(area),1]))
 
-        for cnt in cnts:
-          area = cv2.contourArea(cnt)
-          areaMin = 1000
-          if area > areaMin:
-            x,y,w,h = cv2.boundingRect(cnt)
+
+        # for cnt in cnts:
+        #   area = cv2.contourArea(cnt)
+        #   areaMin = 1000
+        #   if area > areaMin:
+        #     x,y,w,h = cv2.boundingRect(cnt)
             
-            if area >= 7000 and area <= 20000:
-              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
-            else:
-              cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
-            # if tag == 0:
-            #   cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
-            # elif tag == 1:
-            #   cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
-            ce_x = x + w/2
-            ce_y = y + h/2
-            cv2.circle(hsv,(int(ce_x),int(ce_y)),5,(0,255,0),5)
-            old_center = [int(ce_x),int(ce_y),int(area)]
-            pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
+        #     if area >= 7000 and area <= 20000:
+        #       cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
+        #     else:
+        #       cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+        #     # if tag == 0:
+        #     #   cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,255,255),2)
+        #     # elif tag == 1:
+        #     #   cv2.rectangle(hsv,(x,y),(x+w,y+h),(0,0,255),2)
+        #     ce_x = x + w/2
+        #     ce_y = y + h/2
+        #     cv2.circle(hsv,(int(ce_x),int(ce_y)),5,(0,255,0),5)
+        #     old_center = [int(ce_x),int(ce_y),int(area)]
+        #     pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
             # if old_center[0] == 0 and old_center[1] == 0 and old_center[2] == 0:
             #   old_center = [int(ce_x),int(ce_y),int(area)]
             #   pub.publish(test([int(old_center[0]),int(old_center[1]),int(area),1]))
