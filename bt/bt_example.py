@@ -152,7 +152,7 @@ class bt_mission:
         if abs(bt_mission.drone.suber.target[0] - bt_mission.center[0]) >= 60:
           msg.angular.z = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.2
           # msg.linear.x = (bt_mission.drone.suber.target[0] - bt_mission.center[0]) / abs((bt_mission.drone.suber.target[0] - bt_mission.center[0])) * 0.1
-          print("action: FixedPose linear x",msg.angular.z)
+          print("action: FixedPose linear z",msg.angular.z)
           bt_mission.cmd_pub.publish(msg)
           bt_mission.rate.sleep()
           # bt_mission.change_pub.publish(0)
